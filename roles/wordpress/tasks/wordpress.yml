@@ -79,7 +79,7 @@
     owner: nginx 
     group: nginx
     mode: '0755'
-    
+
 - name: start and enable nginx 
   service: 
     name: nginx
@@ -92,6 +92,14 @@
     permanent: yes 
     state: enabled 
     immediate: yes 
+    
+- name: add wordpress to firewalld
+  firewalld:
+    port: 8000/tcp
+    permanent: yes 
+    state: enabled 
+    immediate: yes 
+
 
 - name: conf php-fpm
   lineinfile: 
