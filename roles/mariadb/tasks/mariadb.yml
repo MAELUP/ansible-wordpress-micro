@@ -21,8 +21,8 @@
   yum: 
     name: 
         - mariadb
-        - mariadb-server
-        - mariadb-client 
+        - Mariadb-server
+        - Mariadb-client 
     state: present
 
 - name: start mariadb and enable
