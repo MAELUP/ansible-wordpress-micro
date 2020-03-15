@@ -55,6 +55,11 @@
     enablerepo: remi-php74  
     state: present
 
+- name: install nginx 
+  yum: 
+    name: nginx
+    state: latest
+
 - name: update 
   yum: 
    name: '*'
@@ -67,7 +72,26 @@
     state: enabled 
     immediate: yes 
 
-- name: add wordpress to firewalld
+- name: start and enable nginx 
+  service: 
+    name: nginx
+    state: started
+    enabled: yes 
+
+- name: sent nginx file config to remote server
+  copy: 
+    src: ../templates/nginx.conf
+    dest: /etc/nginx/conf.d/nginx.wordpress.conf
+    owner: nginx 
+    group: nginx
+    mode: '0755'
+
+- name: restart nginx 
+  service:
+    name: nginx
+    state: restarted
+
+- name: add nginx to firewalld
   firewalld:
     port: 80/tcp
     permanent: yes 
@@ -96,37 +120,6 @@
   file:
     path: /var/run/php-fpm/www.sock
     mode: '0777'
-
-- name: install nginx 
-  yum: 
-    name: nginx
-    state: latest
-
-- name: start and enable nginx 
-  service: 
-    name: nginx
-    state: started
-    enabled: yes 
-
-- name: sent nginx file config to remote server
-  copy: 
-    src: ../templates/nginx.conf
-    dest: /etc/nginx/conf.d/nginx.wordpress.conf
-    owner: nginx 
-    group: nginx
-    mode: '0755'
-
-- name: restart nginx 
-  service:
-    name: nginx
-    state: restarted
-
-- name: add nginx to firewalld
-  firewalld:
-    port: 80/tcp
-    permanent: yes 
-    state: enabled 
-    immediate: yes 
 
 - name: Download and unpack latest WordPress
   unarchive:
