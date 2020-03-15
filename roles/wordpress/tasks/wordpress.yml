@@ -29,7 +29,6 @@
   yum: 
     name: 
         - MariaDB-client 
-        - MariaDB-common 
     state: present
 
 - name: install php

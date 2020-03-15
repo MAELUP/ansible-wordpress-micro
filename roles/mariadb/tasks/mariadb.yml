@@ -20,14 +20,13 @@
 - name: install mariadb 
   yum: 
     name: 
-        - MariaDB-common 
         - MariaDB-server
         - MariaDB-client 
     state: present
 
 - name: start mariadb and enable
   service: 
-    name: mariadb
+    name: mysql
     state: started
     enabled: yes
 
