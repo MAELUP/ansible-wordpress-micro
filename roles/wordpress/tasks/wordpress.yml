@@ -72,12 +72,6 @@
     state: enabled 
     immediate: yes 
 
-- name: start and enable nginx 
-  service: 
-    name: nginx
-    state: started
-    enabled: yes 
-
 - name: sent nginx file config to remote server
   copy: 
     src: ../templates/nginx.conf
@@ -85,11 +79,12 @@
     owner: nginx 
     group: nginx
     mode: '0755'
-
-- name: restart nginx 
-  service:
+    
+- name: start and enable nginx 
+  service: 
     name: nginx
-    state: restarted
+    state: started
+    enabled: yes 
 
 - name: add nginx to firewalld
   firewalld:
