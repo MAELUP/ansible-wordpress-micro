@@ -22,7 +22,7 @@
    - { line: "name = MariaDB" }
    - { line: "baseurl = http://yum.mariadb.org/5.5/rhel7-amd64/" }
    - { line: "gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" } 
-   - { line: "gpgcheck=0" }
+   - { line: "gpgcheck=1" }
 
 - name: install mariadb-client
   yum: 
