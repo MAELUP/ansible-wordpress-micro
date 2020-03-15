@@ -92,7 +92,7 @@
     permanent: yes 
     state: enabled 
     immediate: yes 
-    
+
 - name: add wordpress to firewalld
   firewalld:
     port: 8000/tcp
@@ -117,7 +117,6 @@
   service: 
    name: php-fpm
    state: started
-   enable: yes
   
 - name: Change file php-fpm permissions
   file:
