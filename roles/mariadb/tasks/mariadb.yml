@@ -35,7 +35,13 @@
   service: 
     name: mariadb
     state: started
-    enabled: yes
+
+- name: set root password mariadb
+  mysql_user: 
+    name: root
+    password: "admin"
+    state: present
+  ignore_errors: yes
 
 - name: set root password mariadb
   mysql_user: 
