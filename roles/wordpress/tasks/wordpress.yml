@@ -27,7 +27,7 @@
 - name: install mariadb-client
   yum: 
     name: 
-        - Mariadb-client 
+        - MariaDB-client 
     state: present
 
 - name: install php
