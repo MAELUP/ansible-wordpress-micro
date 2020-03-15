@@ -15,7 +15,7 @@
 
 - name: add repo mariadb
   lineinfile: 
-   path: /etc/yum.repos.d/mariadb.repo
+   path: /etc/yum.repos.d/MariaDB.repo
    line: "{{ item.line }}"
   loop:
    - { line: "[mariadb]" }
