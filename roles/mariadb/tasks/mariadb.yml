@@ -20,6 +20,7 @@
 - name: install mariadb 
   yum: 
     name: 
+        - mariadb
         - MariaDB-server
         - MariaDB-client 
     state: present
