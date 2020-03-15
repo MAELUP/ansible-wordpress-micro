@@ -1,0 +1,78 @@
+--- 
+- name: create repo mariadb
+  file:
+    path: /etc/yum.repos.d/mariadb.repo
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: add repo mariadb
+  lineinfile: 
+   path: /etc/yum.repos.d/mariadb.repo
+   line: "{{ item.line }}"
+  loop:
+   - { line: "[mariadb]" }
+   - { line: "name = MariaDB" }
+   - { line: "baseurl = http://yum.mariadb.org/5.5/rhel7-amd64/" }
+   - { line: "gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" } 
+   - { line: "gpgcheck=0" }
+
+- name: install mariadb 
+  yum: 
+    name: 
+        - mariadb
+        - mariadb-server
+        - mariadb-client 
+    state: present
+
+- name: start mariadb and enable
+  service: 
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: set root password mariadb
+  mysql_user: 
+    name: root
+    password: "admin"
+    state: present
+  ignore_errors: yes
+    
+- name: remove all anonymous user accounts 
+  mysql_user:
+    name: ''
+    host_all: yes
+    state: absent
+    login_user: root
+    login_password: admin
+
+- name: Remove the MySQL test database 
+  mysql_db: 
+    name: test
+    state: absent
+    login_user: root
+    login_password: admin
+
+- name: Create database wordpress 
+  mysql_db:
+    name: wordpressdb 
+    state: present
+    login_user: root
+    login_password: admin
+
+- name: Create wordpress user 
+  mysql_user:
+    name: wp-user
+    password: wp-pass
+    priv: "wordpressdb.*:ALL"
+    host: "{{wp-hosts}}"
+    state: present
+    login_user: root
+    login_password: admin
+
+- name: add mysql to firewalld
+  firewalld:
+    port: 3306/tcp
+    permanent: yes 
+    state: enabled 
+    immediate: yes 

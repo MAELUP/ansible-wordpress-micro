@@ -1,0 +1,151 @@
+---
+- name: add epel and remi repository 
+  yum: 
+   name: 
+    - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    - https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+   state: present
+
+- name: create repo mariadb
+  file:
+    path: /etc/yum.repos.d/mariadb.repo
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: add repo mariadb
+  lineinfile: 
+   path: /etc/yum.repos.d/mariadb.repo
+   line: "{{ item.line }}"
+  loop:
+   - { line: "[mariadb]" }
+   - { line: "name = MariaDB" }
+   - { line: "baseurl = http://yum.mariadb.org/5.5/rhel7-amd64/" }
+   - { line: "gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" } 
+   - { line: "gpgcheck=0" }
+
+- name: install mariadb-client
+  yum: 
+    name: 
+        - mariadb-client 
+    state: present
+
+- name: install php
+  yum:
+    name:
+      - epel-release
+      - yum-utils
+      - php
+      - php-common
+      - php-mysql
+      - php-gd
+      - php-xml
+      - php-mbstring
+      - php-mcrypt
+      - php-xmlrpc
+      - php-fpm 
+      - php-mysqlnd 
+      - php-zip 
+      - php-devel 
+      - php-curl  
+      - php-pear 
+      - php-bcmath 
+      - php-json
+    enablerepo: remi-php74  
+    state: present
+
+- name: update 
+  yum: 
+   name: '*'
+   state: latest
+  
+- name: add mysql-client to firewalld
+  firewalld:
+    port: 3306/tcp
+    permanent: yes 
+    state: enabled 
+    immediate: yes 
+
+- name: add wordpress to firewalld
+  firewalld:
+    port: 80/tcp
+    permanent: yes 
+    state: enabled 
+    immediate: yes 
+
+- name: conf php-fpm
+  lineinfile: 
+    path: /etc/php-fpm.d/www.conf 
+    regexp: "{{item.regexp}}"
+    line: "{{item.line}}"
+  loop:
+   - { regexp: ^user =, line: "user = nginx" }
+   - { regexp: ^group =, line: "group = nginx" }
+   - { regexp: ^listen =, line: "listen = /run/php-fpm/www.sock" } 
+   - { regexp: ^listen.owner =, line: "listen.owner = nginx" }
+   - { regexp: ^listen.group =, line: "listen.group = nginx" }
+
+- name: start php-fpm 
+  service: 
+   name: php-fpm
+   state: started
+   enable: yes
+  
+- name: Change file php-fpm permissions
+  file:
+    path: /var/run/php-fpm/www.sock
+    mode: '0777'
+
+- name: install nginx 
+  yum: 
+    name: nginx
+    state: latest
+
+- name: start and enable nginx 
+  service: 
+    name: nginx
+    state: started
+    enabled: yes 
+
+- name: sent nginx file config to remote server
+  copy: 
+    src: ../templates/nginx.conf
+    dest: /etc/nginx/conf.d/nginx.wordpress.conf
+    owner: nginx 
+    group: nginx
+    mode: '0755'
+
+- name: restart nginx 
+  service:
+    name: nginx
+    state: restarted
+
+- name: add nginx to firewalld
+  firewalld:
+    port: 80/tcp
+    permanent: yes 
+    state: enabled 
+    immediate: yes 
+
+- name: Download and unpack latest WordPress
+  unarchive:
+    src: https://wordpress.org/latest.tar.gz
+    dest: "/var/www/"
+    remote_src: yes
+    creates: "/var/www/wordpress"
+- name: change file name [copy new file]
+  copy:
+    remote_src: true
+    src: /var/www/wordpress/wp-config-sample.php
+    dest: /var/www/wordpress/wp-config.php
+
+- name: edit file
+  lineinfile:
+    path: /var/www/wordpress/wp-config.php
+    regexp: "{{item.regexp}}"
+    line: "{{item.line}}"
+  loop:
+   - { regexp: ^define\('DB_NAME', line: "define('DB_NAME', 'wordpressdb');" }
+   - { regexp: ^define\('DB_USER', line: "define('DB_USER' , 'wp-user');" }
+   - { regexp: ^define\('DB_PASSWORD', line: "define('DB_PASSWORD' , 'wp-pass');" } 
+   - { regexp: ^define\('DB_HOST', line: "define('DB_HOST' , '{{db-hosts}}');" }
