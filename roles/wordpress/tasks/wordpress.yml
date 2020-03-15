@@ -83,8 +83,8 @@
    - { regexp: ^user =, line: "user = nginx" }
    - { regexp: ^group =, line: "group = nginx" }
    - { regexp: ^listen =, line: "listen = /run/php-fpm/www.sock" } 
-   - { regexp: ^listen.owner =, line: "listen.owner = nginx" }
-   - { regexp: ^listen.group =, line: "listen.group = nginx" }
+   - { regexp: ^;listen.owner =, line: "listen.owner = nginx" }
+   - { regexp: ^;listen.group =, line: "listen.group = nginx" }
 
 - name: start php-fpm 
   service: 
