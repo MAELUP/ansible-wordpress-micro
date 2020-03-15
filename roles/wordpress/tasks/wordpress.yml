@@ -19,7 +19,7 @@
    path: /etc/yum.repos.d/MariaDB.repo
    line: "{{ item.line }}"
   loop:
-   - { line: "[mariadb]" }
+   - { line: "[MariaDB]" }
    - { line: "name = MariaDB" }
    - { line: "baseurl = http://yum.mariadb.org/5.5/rhel7-amd64/" }
    - { line: "gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" } 
