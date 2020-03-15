@@ -4,7 +4,7 @@
   become: yes
   become_method: sudo 
   vars: 
-    db-hosts: "192.168.145.145"
+    db_hosts: "192.168.145.145"
   roles:
    - wordpress
 
@@ -13,7 +13,7 @@
   become: yes
   become_method: sudo
   vars: 
-    wp-hosts: "192.168.145.145"
+    wp_hosts: "192.168.145.145"
   roles:
    - mariadb
 ...

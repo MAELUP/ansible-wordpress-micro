@@ -65,7 +65,7 @@
     name: wp-user
     password: wp-pass
     priv: "wordpressdb.*:ALL"
-    host: "{{wp-hosts}}"
+    host: "{{wp_hosts}}"
     state: present
     login_user: root
     login_password: admin

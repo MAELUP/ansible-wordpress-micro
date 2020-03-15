@@ -148,4 +148,4 @@
    - { regexp: ^define\('DB_NAME', line: "define('DB_NAME', 'wordpressdb');" }
    - { regexp: ^define\('DB_USER', line: "define('DB_USER' , 'wp-user');" }
    - { regexp: ^define\('DB_PASSWORD', line: "define('DB_PASSWORD' , 'wp-pass');" } 
-   - { regexp: ^define\('DB_HOST', line: "define('DB_HOST' , '{{db-hosts}}');" }
+   - { regexp: ^define\('DB_HOST', line: "define('DB_HOST' , '{{db_hosts}}');" }
