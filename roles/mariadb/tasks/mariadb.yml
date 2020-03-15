@@ -1,7 +1,7 @@
 --- 
 - name: create repo mariadb
   file:
-    path: /etc/yum.repos.d/mariadb.repo
+    path: /etc/yum.repos.d/MariaDB.repo
     owner: root
     group: root
     mode: '0755'
