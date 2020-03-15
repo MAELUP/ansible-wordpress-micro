@@ -19,11 +19,11 @@
    path: /etc/yum.repos.d/MariaDB.repo
    line: "{{ item.line }}"
   loop:
-   - { line: "[MariaDB]" }
+   - { line: "[mariadb]" }
    - { line: "name = MariaDB" }
-   - { line: "baseurl = http://yum.mariadb.org/5.5/rhel7-amd64/" }
-   - { line: "gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" } 
-   - { line: "gpgcheck=1" }
+   - { line: "baseurl = http://yum.mariadb.org/10.4.12/centos7-amd64" }
+   - { line: "gpgkey = https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" } 
+   - { line: "gpgcheck = 1" }
 
 - name: install mariadb-client
   yum: 
