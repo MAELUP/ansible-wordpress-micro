@@ -92,7 +92,6 @@
   service: 
     name: nginx
     state: started
-    enabled: yes 
   ignore_errors: yes
 
 - name: add nginx to firewalld
@@ -154,3 +153,9 @@
    - { regexp: ^define\('DB_USER', line: "define('DB_USER' , 'wp-user');" }
    - { regexp: ^define\('DB_PASSWORD', line: "define('DB_PASSWORD' , 'wp-pass');" } 
    - { regexp: ^define\('DB_HOST', line: "define('DB_HOST' , '{{db_hosts}}');" }
+
+- name: start and enable nginx 
+  service: 
+    name: nginx
+    state: restarted
+  ignore_errors: yes
