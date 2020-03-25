@@ -86,6 +86,7 @@
     name: nginx
     state: started
     enabled: yes 
+  ignore_errors: yes
 
 - name: add nginx to firewalld
   firewalld:
