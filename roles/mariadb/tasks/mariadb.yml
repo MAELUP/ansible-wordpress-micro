@@ -29,9 +29,10 @@
     name: 
         - mariadb
         - mariadb-server
+        - PyMySQL
     state: present
 
-- name: start mariadb and enable
+- name: start mariadb and enables
   service: 
     name: mariadb
     state: started
