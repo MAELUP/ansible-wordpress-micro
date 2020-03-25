@@ -13,17 +13,7 @@
     group: root
     state: touch
     mode: '0755'
-
-# - name: add repo mariadb
-#   lineinfile: 
-#    path: /etc/yum.repos.d/MariaDB.repo
-#    line: "{{ item.line }}"
-#   loop:
-#    - { line: "[mariadb]" }
-#    - { line: "name = MariaDB" }
-#    - { line: "baseurl = http://yum.mariadb.org/10.4.12/centos7-amd64" }
-#    - { line: "gpgkey = https://yum.mariadb.org/RPM-GPG-KEY-MariaDB" } 
-#    - { line: "gpgcheck = 1" }
+    
 - name: add repo mariadb
   lineinfile: 
    path: /etc/yum.repos.d/MariaDB.repo
@@ -68,7 +58,7 @@
 - name: install nginx 
   yum: 
     name: nginx
-    state: latest
+    state: present
 
 - name: update 
   yum: 
@@ -131,7 +121,7 @@
 - name: Change file php-fpm permissions
   file:
     path: /var/run/php-fpm/www.sock
-    mode: '0777'
+    mode: '0755'
 
 - name: Download and unpack latest WordPress
   unarchive:

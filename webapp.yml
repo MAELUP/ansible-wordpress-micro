@@ -1,19 +1,17 @@
 ---
 - hosts: mariadb 
-  gather_facts: no
+  gather_facts: yes
   become: yes
-  become_method: sudo
-  vars: 
-    wp_hosts: "192.168.145.145"
+  become_user: root
+# become_method: sudo
   roles:
    - mariadb
   
 - hosts: wordpress
-  gather_facts: no
+  gather_facts: yes
   become: yes
-  become_method: sudo 
-  vars: 
-    db_hosts: "192.168.145.145"
+  become_user: root
+# become_method: sudo 
   roles:
    - wordpress
 ...

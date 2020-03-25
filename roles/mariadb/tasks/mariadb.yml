@@ -37,7 +37,7 @@
     state: started
 
 - name: set root password mariadb
-  shell: mysqladmin password "abc"
+  shell: mysqladmin password "admin"
   ignore_errors: yes
 
 - name: set root password mariadb
