@@ -27,6 +27,7 @@
 - name: install mariadb 
   yum: 
     name: 
+        - epel-release
         - mariadb
         - mariadb-server
         - PyMySQL
