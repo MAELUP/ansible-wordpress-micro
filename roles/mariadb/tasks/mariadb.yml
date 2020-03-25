@@ -30,7 +30,7 @@
         - epel-release
         - mariadb
         - mariadb-server
-        - PyMySQL
+        - MySQL-python
     state: present
 
 - name: start mariadb and enables

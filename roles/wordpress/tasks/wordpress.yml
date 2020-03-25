@@ -13,7 +13,7 @@
     group: root
     state: touch
     mode: '0755'
-    
+
 - name: add repo mariadb
   lineinfile: 
    path: /etc/yum.repos.d/MariaDB.repo
@@ -52,6 +52,7 @@
       - php-pear 
       - php-bcmath 
       - php-json
+      - MySQL-python
     enablerepo: remi-php74  
     state: present
 
