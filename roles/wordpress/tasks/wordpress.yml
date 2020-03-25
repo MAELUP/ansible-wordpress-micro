@@ -55,16 +55,19 @@
       - MySQL-python
     enablerepo: remi-php74  
     state: present
+  ignore_errors: yes
 
 - name: install nginx 
   yum: 
     name: nginx
     state: present
+  ignore_errors: yes
 
 - name: update 
   yum: 
    name: '*'
    state: latest
+  ignore_errors: yes
   
 - name: add mysql-client to firewalld
   firewalld:
@@ -80,6 +83,7 @@
     owner: nginx 
     group: nginx
     mode: '0755'
+  ignore_errors: yes
 
 - name: start and enable nginx 
   service: 
