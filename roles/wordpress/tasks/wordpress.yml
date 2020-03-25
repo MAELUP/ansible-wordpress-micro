@@ -1,4 +1,7 @@
 ---
+- name: Disable SELinux
+  selinux:
+    state: disabled
 - name: add epel and remi repository 
   yum: 
    name: 

@@ -1,4 +1,7 @@
 --- 
+- name: Disable SELinux
+  selinux:
+    state: disabled
 # - name: create repo mariadb
 #   file:
 #     path: /etc/yum.repos.d/MariaDB.repo
